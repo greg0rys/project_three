@@ -1,6 +1,8 @@
 CC = g++
 CPPFLAGS = -std=c++11 -g -Wall
 DEPS = driver.h website.h table.h
+REMOVETESTS = rm -fv scratch.*
+
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CPPFLAGS)
@@ -13,4 +15,8 @@ clean:
 	$(info -- cleaning up! --)
 	rm -fv *.o
 	rm -fv app
+
+removeScratch:
+	$(info -- removing test files --)
+	$(REMOVETESTS)
 
