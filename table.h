@@ -84,9 +84,9 @@ class table {
         void growTable();
         void getSitesByTopic(node * sourceList, website matches[]);
         int countChain(node * sourceList) const;
-        bool getSiteAt(node * list, website &theSite);
+        bool getSiteAt(node * list, website &theSite); // rename this to
+        // edit site at
         int searchAllChains( int targetRating);
-
         int removeFromChain(node *&, node *, int);
 
 };

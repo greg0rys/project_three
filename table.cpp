@@ -345,12 +345,15 @@ int table::removeFromChain(node *& head, node * prev,  int targetRating)
 bool table::getSiteAt(table::node *list, website &theSite)
 {
 
+    // terminating step
     if(!list)
         return false;
+
+    // base case - the site we want to edit.
     if(strcmp(theSite.getURL(),list->data->getURL()) == 0)
     {
-        theSite.writeSummary(list->data->getSummary());
-         *list->data = theSite;
+         theSite.writeSummary(list->data->getSummary());
+         *list->data = theSite; // make use of websites overloaded = op
         return true;
     }
 
@@ -370,7 +373,7 @@ bool table::isEmptyChain(const int location) const
 bool table::isEmptyTable() const
 {
 
-    return size < 0;
+    return size <= 0; // last change 1am might cause bug
 }
 
 // section getSitesByTopic()
@@ -390,13 +393,17 @@ int table::countChain(table::node *sourceList) const
 {
     if(!sourceList)
         return 0;
+
     return 1 + countChain(sourceList->next);
 }
 
 
 void table::chainLength(int *& chainLengths) const
 {
-    int counter = 0;
+    int counter = 0; // use counter to keep the array of chain lengths
+    // start at 0 => totalChains
+    //if we used I then the chainLengths arry would have random indexes that
+    // would be hard to loop through ie it could first item = 59
     if(chainLengths)
         delete []chainLengths;
 
