@@ -111,6 +111,8 @@ const table& table::operator=(const table &aTable)
 
 
 // section operator<<
+// only display the chains in the table that actually have data in them
+// but let the user know how many total spots there are
 ostream& operator<<(ostream &out,  const table &aTable)
 {
     if(aTable.isEmptyTable())
@@ -119,15 +121,20 @@ ostream& operator<<(ostream &out,  const table &aTable)
         return  out;
     }
 
-    out << "Displaying the table.\t There are currently " <<
-    aTable.getTotalChains()
-        << " chains present" << endl;
+    out << "Displaying the table.\t "
+        <<  "[ " << aTable.getTotalChains() << "/"
+        <<   aTable.getCapacity() << " in use ]" << endl;
+
     for(auto i = 0; i < aTable.getCapacity(); i++)
     {
-        out << "Chain " << i << "\tLength: " << aTable.countChain(aTable
-        .hashTable[i]) << endl;
-        aTable.displayList(out, aTable.hashTable[i]);
-        out << endl;
+        if(!aTable.isEmptyChain(i))
+        {
+            out << "Chain " << i << "\tLength: "
+                << aTable.countChain(aTable.hashTable[i]) << endl;
+            aTable.displayList(out, aTable.hashTable[i]);
+            out << endl;
+        }
+
     }
 
     return out;
