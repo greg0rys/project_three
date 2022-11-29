@@ -4,27 +4,35 @@
 
 using namespace std;
 
+/*
+ * filename: website.h
+ * the header file for website.cpp
+ */
+
 class website {
 public:
+    // constructors
     website();
-    website(char *,char *, char *, char *, int); //topic,url,summ,review,rating
     website(const website &);
-    // constructor for
-    // searching
     ~website();
+
+    // operator overlaods
     website& operator=(const website &);
     friend ostream& operator<<(ostream &, website &);
+
+    // setters
     void setTopic(const char *);
     void setURL(const char *);
     void writeSummary(const char *);
     void writeReview(const char *);
     void setRating(const int);
+
+    // getters
     int getRating() const;
     char * getTopic() const;
     char * getURL() const;
     char * getSummary() const;
     char * getReview() const;
-    bool isOneStar() const;
 
 private:
     char * topic;
@@ -33,5 +41,5 @@ private:
     char * review;
     int    rating;
 
-    void destroySelf();
+    void destroySelf(); // deallocate all pointers in use.
 };

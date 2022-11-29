@@ -1,8 +1,18 @@
 #include "driver.h"
-// section menu
+
+/*
+ * filename: driver.cpp
+ * the implementation file for driver.h
+ */
+
+
+/*
+ * Create a menu of choices the user can select to invoke operations.
+ */
 void menu()
 {
     table theTable;
+    theTable.init(theTable);
     int option = 0;
 
     do {
@@ -22,7 +32,11 @@ void menu()
     } while(option != 8);
 }
 
-
+/*
+ * Call all the operations listed in the menu choices.
+ * @param aTable the table we are going to operate on
+ * @param opertionNo the number of the menu item to invoke.
+ */
 void menuOperations(table &aTable, const int operationNo)
 {
     website aWebsite;
@@ -50,12 +64,23 @@ void menuOperations(table &aTable, const int operationNo)
             {
                 cout << "****** FOUND " << numResults << " ****** " << endl
                      << "\t For Topic: " << topicName << endl;
-                displaySearchResults(searchResults, numResults);
 
+                for(auto i = 0; i < numResults; i++ )
+                {
+                    cout << searchResults[i] << endl;
+                }
+            }
+            else
+            {
+                cout << "There were no websites found for: " << topicName <<
+                endl;
             }
             if(topicName)
                 delete []topicName;
             topicName = nullptr;
+            if(searchResults)
+                delete []searchResults;
+            searchResults = nullptr;
             break;
 
         case 3:
@@ -88,11 +113,16 @@ void menuOperations(table &aTable, const int operationNo)
             if(!aTable.printByTopic(topicName))
                 cout << "No Websites found for topic name: " << topicName <<
                 endl;
+
+            if(topicName)
+                delete []topicName;
+            topicName = nullptr;
             break;
 
         case 6:
             cout << aTable << endl;
             break;
+
         case 7:
             totalCounted = aTable.getTotalChains();
             aTable.chainLength(chainLengths);
@@ -124,15 +154,10 @@ void menuOperations(table &aTable, const int operationNo)
 }
 
 
-void displaySearchResults( website * results,const int numResults)
-{
-    for(auto i = 0; i < numResults; i++)
-    {
-        cout << results[i] << endl;
-    }
-}
-
-
+/*
+ * Generate a website object
+ * @param aSite, a reference to a website that we will setup
+ */
 void generateWebsite(website & aSite)
 {
     typedef char* charC;
@@ -175,7 +200,10 @@ void generateWebsite(website & aSite)
     topicName = siteURL = siteSummary = siteReview = nullptr;
 }
 
-
+/*
+ * Generate a website object to be used as a search key when searching by topic
+ * @param aSite, a reference to a website that we will setup as the search site
+ */
 void generateSearchSite(website &aSite)
 {
     typedef char* charC;
@@ -208,10 +236,6 @@ void generateSearchSite(website &aSite)
 
 
 }
-
-
-
-
 
 
 
@@ -289,4 +313,5 @@ int main()
 {
     cout << "Starting the program " << endl;
     menu();
+    cout << endl << "[ Done ]";
 }

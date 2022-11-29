@@ -1,29 +1,17 @@
 #include "website.h"
 
-// section default constructor
+/*
+ * filename: website.cpp
+ * the implementation file for website.h
+ */
+
+// class default constructor
 website::website():topic(nullptr),URL(nullptr),summary(nullptr),review
 (nullptr), rating(0){}
 
-//section custom constructor
-website::website(char * siteTopic, char * siteURL, char * siteSummary,
-                 char * siteReview, int rating)
-{
-    this->topic = new char[strlen(siteTopic) + 1];
-    strcpy(this->topic, siteTopic);
 
-    this->URL = new char[strlen(siteURL) + 1];
-    strcpy(this->URL, siteURL);
 
-    this->summary = new char[strlen(siteSummary) + 1];
-    strcpy(this->summary, siteSummary);
-
-    this->review = new char[strlen(siteReview) + 1];
-    strcpy(this->review, siteReview);
-
-    this->rating = rating;
-}
-
-// section copy constructor
+// class copy constructor
 website::website(const website &aSite):topic(nullptr), URL(nullptr), summary
 (nullptr),review(nullptr), rating(0)
 {
@@ -32,13 +20,15 @@ website::website(const website &aSite):topic(nullptr), URL(nullptr), summary
 
 
 
-// section destructor
+// class destructor
 website::~website()
 {
     destroySelf();
 }
 
-//section destroySelf()
+/*
+ * destroy all pointers used by object at class destruction
+ */
 void website::destroySelf()
 {
     if(topic)
@@ -56,7 +46,10 @@ void website::destroySelf()
 }
 
 
-// section setTopic()
+/*
+ * Set the topic for a given website
+ * @param topicName the new topic for this website.
+ */
 void website::setTopic(const char * topicName)
 {
     if(this->topic)
@@ -67,7 +60,10 @@ void website::setTopic(const char * topicName)
 }
 
 
-// section setURL()
+/*
+ * set the url of a given website
+ * @param urlInfo the url we wish to set the website too.
+ */
 void website::setURL(const char * urlInfo)
 {
     if(this->URL)
@@ -78,7 +74,10 @@ void website::setURL(const char * urlInfo)
 }
 
 
-// section writeSummary()
+/*
+ * Set the summary for a given website
+ * @param summaryInfo the summary for the website.
+ */
 void website::writeSummary(const char * summaryInfo)
 {
     if(this->summary)
@@ -88,7 +87,10 @@ void website::writeSummary(const char * summaryInfo)
 }
 
 
-// section writeReview()
+/*
+ * Set the review for a given website
+ * @param reviewInfo the review for the website.
+ */
 void website::writeReview(const char * reviewInfo)
 {
     if(this->review)
@@ -98,61 +100,65 @@ void website::writeReview(const char * reviewInfo)
 }
 
 
-// section setRating()
+/*
+ * Set the rating for a given website
+ * @param newRating the rating we are setting this website too.
+ */
 void website::setRating(const int newRating)
 {
     this->rating = newRating;
 }
 
 
-// section getRating()
+/*
+ * Get the websites rating
+ * @return the rating of this website.
+ */
 int website::getRating() const
 {
     return this->rating;
 }
 
 
-// section getTopic()
+/*
+ * Get the topic of website
+ * @return a char * to this websites topic
+ */
 char* website::getTopic() const
 {
     return this->topic;
 }
 
-// section getURL()
+/*
+ * Get the URL of a website
+ * @return a char pointer with the websites URL
+ */
 char* website::getURL() const
 {
     return this->URL;
 }
 
-// section getSummary()
+/*
+ * Get the websites summary
+ * @return a char pointer with the websites summary
+ */
 char* website::getSummary() const
 {
     return this->summary;
 }
 
-//section getReview()
+/*
+ * Get the review for the website
+ * @return a char pointer with the websites review in it.
+ */
 char* website::getReview() const
 {
     return this->review;
 }
 
 
-// section isOneStar()
-/*
- * This will allow for a faster check when removing one star websites, instead
- * of having to get the sites rating through the get method and then
- * comparing it
- * we can simply just return a boolean check each time we need to delete one
- * star websites.
- */
-bool website::isOneStar() const
-{
-    return (this->rating == 1);
-}
 
-
-
-// section operator=
+// overloaded operator=
 website& website::operator=(const website &aSite)
 {
     if(this == &aSite)
@@ -203,15 +209,16 @@ website& website::operator=(const website &aSite)
 
 }
 
-// section operator<<
+//  operator<<
 // this overloaded operator is operating under the assumption that none of
 // the fields in the website will ever be null pointer
 // if there was a case they could be nullptr we must check before printing it.
 ostream& operator<<(ostream & out, website &aSite)
 {
-    out <<  aSite.URL << "\tRating: " << aSite.rating << endl;
-    out << "Summary:\n\t" << aSite.summary << endl;
-    out << "Review:\n\t" <<aSite.review << endl;
+    out <<  aSite.URL << "\tRating: " << aSite.rating
+        << "\tTopic: " << aSite.getTopic() <<endl;
+    out << "\tSummary:\n\t" << aSite.summary << endl;
+    out << "\tReview:\n\t" <<aSite.review << endl;
 
     return out;
 }

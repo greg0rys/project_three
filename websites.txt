@@ -1,0 +1,5 @@
+Programming;https://www.cpp.com;lots of different programming topics;good info;1
+Cooking;https://www.menulog.com;good options;very good food;5
+Cooking;https://www.menulog.com;good options;very bad food;1
+Travel;https://www.trivago.com;good flights;bad service;1
+Travel;https://www.priceline.com;good flights;good service;5

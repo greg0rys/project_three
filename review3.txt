@@ -1,0 +1,18 @@
+Greg Shenefelt 
+11/19/2022
+
+For this programs efficiency I will explore how efficient the the hash table implemented with chaining worked for this project.
+
+For this project where we wanted to store linked list in our hash table. I felt this was most efficient as it allows us quick constant time access to the to any index of the hash table, and we don't really have to worry about the size of the items at each index as they are dynamic and can grow quickly! While also giving us the ability to recursively search these lists as needed.
+
+While this was a great way to structure the lists containing a chain of websites. I do feel that the lists should be doubly linked. Having these double links we could compare two nodes at a time in search and remove operations which in my mind speeds up the process. The double links would've also allowed us to know if we even need to check the next value while we are currently working on a value. Though in this case where the data was unsorted I see why we chose to use SLL. 
+
+For this data structure the most efficient thing for me is its ability to get to any chain in the table quickly. While also not having to worry about how many items I'm storing at each chain as they can simply just add a next pointer. I also find it efficent that this table is not bound to any fixed size, if the current number of items == capacity then we can grow the table by a factor of 3 to keep its size prime; without the user of our program having to worry about any of those details.
+
+The most inefficient thing about this data structure is the way I implemented its inital size. It starts at a very large prime size of 101 items causing search operations to become expensive as now we have to check 101 different places to see if there is even anything at that chain. To help reduce this, I implemented a method to first check if the chain is empty before doing anything with it. 
+
+The second inefficent thing about this data structure is the use of the tables "size" its not very clear that the size actually represents the total number of items accross all chains NOT the number of indexs avaliable in the table.
+
+The final thing I found to be inefficient was my implementation of two different website generating methods in the driver. I made this choice at first because I wanted to be able to create a website object depending on the context, and if the user was going to be updating an item we didn't need to intake the summary. But, instread of building a whole new object to pass around, I could have simply taken the input from the user and found the website and call its set methods to update the values. Now I see that there was no real use case for making the second website object.  
+
+Had I had more time to solve this problem I would have really paid attention to how efficient each operation was. For example I would have created a separate insert function or maybe even called it update which would have taken the updated website and the chain it should be inserted it would then traverse to the place it should be inserted and update the links of the chain. Again preventing the creation of a temporary website object. I would also try and reduce the number of methods I created by thinking about how a given method can return success or failure of a given operation without depending on some unneeded operation like printByTopic because the chain at could be checked for a null value first.

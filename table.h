@@ -4,22 +4,11 @@
 #include <fstream>
 #include "website.h"
 using namespace std;
+
 /*
- * 1.	Constructor
-2.	Destructor (deallocate the hash table)
-3.	Insert a new website by topic (add website’s information into the hash table)
-4.	Retrieve (retrieve all websites based on the topic keyword supplied)
-a.	retrieve will need an array of websites and the number of matchings as arguments for the ADT to fill. It returns a success/fail flag for whether or not it found a match. Retrieve’s arguments might be something like:
-bool retrieve(char * topic_keyword, website all_matches[], int & num_found);
-b.	Retrieve should not correspond with the user (i.e., it should not prompt, echo, input, or output data).
-
-
-5.	Edit (modify the review and rating for a particular topic and website match)
-6.	Remove (remove all websites with a 1 star rating)
-7.	Display (only displaying matches, based on the topic keyword)
-8.	Display all
-9.	Monitor the performance of hashing function by displaying each chain length
-*/
+ * filename: table.h
+ * the header file for table.cpp
+ */
 
 class table {
 	public:
@@ -28,16 +17,13 @@ class table {
 		~table(); // class destructor
         const table& operator=(const table &aTable);
         friend ostream& operator<< (ostream &, const table &);
-
-		bool insert(const website &); // this will call the private function
-        // to hash
-		bool retrieve(const char *, website[], int &); // this will call
-        // private method
-        // to search the lists
+        int init(table &);
+        int loadFromFile(const char *, table &);
+		bool insert(const website &); //
+		bool retrieve(const char *, website *&, int &); // this will call
         bool edit(website &);
         int remove();
         bool printByTopic(const char *);
-        // chains length
         bool isEmptyChain(const int location) const;
         bool isEmptyTable() const;
         int getTotalChains() const;
@@ -82,11 +68,10 @@ class table {
         void copyList(node * sourceList, node * destinationList);
         void displayList(ostream &out, node * listHead) const;
         void growTable();
-        void getSitesByTopic(node * sourceList, website matches[]);
+        void getSitesByTopic(node * sourceList, website *& matches);
         int countChain(node * sourceList) const;
         bool getSiteAt(node * list, website &theSite); // rename this to
         // edit site at
-        int searchAllChains( int targetRating);
-        int removeFromChain(node *&, node *, int);
+        int removeFromChain(node *&);
 
 };

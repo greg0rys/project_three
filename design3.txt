@@ -1,0 +1,74 @@
+For this project I will use the ADT table to hold a collection of websites. 
+These will be implemented using a Data structure of single linked nodes. Where each node points to the next item in the list
+
+
+For our data structure of a hash table with chains we only need to be worried about two special cases
+	The first being that the total size of the table has reached 2/3 of its capacity at this point collison
+	becomes a higher risk. So we need to be able to grow this table if the need be.
+	This brings me to the second case we need to be aware of; if we decide to grow this table at any given time
+	we cannot just simply copy the values in side the current table into a new table of a bigger size, because then the items wouldn't be at their correct index location.
+	To prevent this when we grow the table, we MUST rehash every item in the old table into the new table so it gets a proper index. 
+	For example if the old size is 101 and we grow by 3. The original items are indexed by key%capacity 
+	so 3%101 and 3%303 will yeild different values for the index they should be placed at in the table. 
+	
+
+To interact with the Data Structure the ADT will need the following functions:
+  1. insert a function to insert a website into the proper chain in our table.
+  2. edit a function that allows the user to edit the review and rating of for a given website and topic match
+  3. printByTopic a function that allows the user to print a chain of websites based on their topic.
+  4.retrieve a function to retrieve an array of websites for a given topic
+  5. isEmptyTable a function to check if our table is empty
+  6. remove a function to remove  one star rated websites fromm our list.
+  7. removeByLikes a function to remove songs with less than m likes
+  8. isEmptyChain a function to check if a chain at a given index in our table is empty.
+  9. getTotalCains a function to get the total number of chains that are currently holding values. 
+  10. chainLength a function to get an array with the lengths of each chain inside.
+  11. getCapacity a function to get the current capacity of our table
+  12. getSize a function to get the current number of websites in this table.
+  13. loadFromFile a function to load website data from a CSV file.
+  
+  Each of the functions will report success or failure in the following ways:
+  1. insert will return a boolean true or false. True if it was able to insert the node, false if else. This method will always return true because we allow duplicate entries.
+  2. retrieve will return a boolean value of true if we were able to find the topics and return them as an array false if else.
+  3. isEmptyTable will return a boolean value true if the table is empty false if else.
+  4.remove will return a boolean flag true if it was able to remove the node false if else.
+  5. edit will return a boolean flag true if the website was updated false if else.
+  6. PrintBYTopic will return true if there are websites with that topic name false if else.
+  8. isEmptyChain will return a boolean flag true if the chain at a given index is empty false if else.
+  9. getTotalChains will return an integer 0 if no there are no chains in use in the table currently.
+  10. getCapcity will return an it > 0 if the capcity isn't 0; 0 if else.
+  11. getSize will return a number 0 if the table is empty >0 if list has data
+  12. loadFromFile will return a number 0 if no websites were loaded from the file >0 if websites were loaded.
+  
+  Each of these functions is implemented to guard the data structure behind a wall these functions allow the client
+  to request data out of the structure without having direct access to the entire structure
+	1. insert guards our data structure by only taking in the website we want to add from the client 
+	    it then manages all the pointers in the table by linking the new node into the table based on its hashed index.
+	2. retrieve gaurds our data structure by again only taking a topic name and a website array  from the client
+		it then puts all the matches into the array and updates the reference passed in with the total number of matchse
+	3. edit gaurds the data structure by only taking in the updated website object we wish to assign
+	   Without letting our client know which chain or index this website resides at in the table
+	4. remove gaurds the data structure by not allowing the user to input any data.
+		this method is setup to strictly remove 1 star websites.
+	5. isEmptyTable gaurds by checking to see if the data structure is empty, without allowing
+		the client to have direct access to the number of nodes in the table.
+	6. printByTopic gaurds by only only accepting the topic name from the client.
+		it then privately hashes the search input and checks for the websites.Without sharing where they're stored.
+	7. isEmptyChain gaurds by only accepting the index location we wish to check.
+		It doesn't tell the client anything about other chains in this table
+	8. getTotalChains gaurds by searching each index and checking if its empty and 
+		it only returns the number of chains being used, it gives the client no information about where they're located.
+	9. chainLength gaurds by allowing only taking in an array to store the lengths in
+		it then checks each chain and stores how many nodes are in that chain in each index of the array param. Again not telling our client its location
+	10. getCapacity gaurds the data structure by only returning a constant copy of its current capacity data memeber. Safegaurding us from the user attempting to change the capacity of the table.
+	11. getSize gaurds the data structure by 
+	only returning a constant copy of the size data memeber. This stops the user from manually chaning anything about the size of this given tbale.
+	12. getSiteAt gaurds the data structure by only accepting a node pointer from the table class itself. The client is unable to use this method publicly.
+	13. loadFromFile gaurds by creating websites and inserting them into the table.
+	
+This programs recursive functions are:
+1. removeFrom chain
+2.retrieve
+3.displayList
+4.getSiteAt
+5. countChain
